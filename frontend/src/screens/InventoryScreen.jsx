@@ -480,6 +480,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 16,
+    paddingHorizontal: 16,
   },
   button: {
     flex: 1,
@@ -499,7 +500,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   inputContainer: {
-    padding: 20,
+    padding: 16,
   },
   inputLabel: {
     fontSize: 16,

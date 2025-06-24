@@ -260,25 +260,6 @@ export default function AddProductScreen() {
         day: "numeric",
       });
 
-      // Deduct ingredients from inventory
-      Object.values(selectedIngredients).forEach((ingredient) => {
-        if (ingredient) {
-          const currentIngredient = ingredients.find(
-            (ing) => ing.id === ingredient.id
-          );
-          if (currentIngredient) {
-            const newQuantity =
-              currentIngredient.quantity - ingredient.quantity;
-            if (typeof updateIngredientQuantity === "function") {
-              updateIngredientQuantity(ingredient.id, newQuantity, today);
-            } else {
-              console.error("updateIngredientQuantity is not a function");
-              return;
-            }
-          }
-        }
-      });
-
       // Show success message and navigate back
       Alert.alert("Success", "New product has been successfully created", [
         {

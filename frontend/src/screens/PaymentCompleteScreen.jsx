@@ -15,6 +15,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import arrowIcon from "../../assets/images/greenArrow.png";
 import ButtonComponent from "../components/ButtonComponent";
+import { useProducts } from "../context/ProductContext";
+import { useIngredients } from "../context/IngredientContext";
 
 export default function PaymentCompleteScreen() {
   const navigation = useNavigation();
@@ -54,6 +56,9 @@ export default function PaymentCompleteScreen() {
   const finalChange = isViewingHistory
     ? dataSource.change
     : (parseFloat(amountReceived) - parseFloat(amount)).toFixed(2);
+
+  const { products } = useProducts();
+  const { updateIngredientQuantity, ingredients } = useIngredients();
 
   const saveTransaction = async () => {
     try {
@@ -106,6 +111,33 @@ export default function PaymentCompleteScreen() {
   const handleNewEntry = async () => {
     try {
       await saveTransaction();
+      // Deduct ingredients from inventory for each product in the order
+      const today = new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      orderItems.forEach((orderItem) => {
+        // Find the product by id (prefer id, fallback to title)
+        const product = products.find(
+          (p) => p.id === orderItem.id || p.title === orderItem.title
+        );
+        if (product && Array.isArray(product.ingredients)) {
+          product.ingredients.forEach((ingredient) => {
+            // Find the current ingredient in inventory
+            const currentIngredient = ingredients.find(
+              (ing) => ing.id === ingredient.id
+            );
+            if (currentIngredient) {
+              // Deduct the total quantity used (ingredient.quantity * orderItem.qty)
+              const totalUsed =
+                (ingredient.quantity || 0) * (orderItem.qty || 1);
+              const newQuantity = currentIngredient.quantity - totalUsed;
+              updateIngredientQuantity(ingredient.id, newQuantity, today);
+            }
+          });
+        }
+      });
       Alert.alert(
         "Success",
         "Transaction has been saved successfully!",
