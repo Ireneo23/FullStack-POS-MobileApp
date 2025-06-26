@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "bold",
     color: "#0D3A2D",
   },

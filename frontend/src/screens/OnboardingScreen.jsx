@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import logo from "../../assets/images/ffee.png";
+import logo from "../../assets/images/appLogo.png";
 
 const { width, height } = Dimensions.get("window");
 

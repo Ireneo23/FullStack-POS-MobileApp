@@ -9,16 +9,26 @@ import {
   TextInput,
   SafeAreaView,
   Alert,
+  Modal,
+  ScrollView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useProducts } from "../context/ProductContext";
+import { useIngredients } from "../context/IngredientContext";
 import Toast from "react-native-toast-message";
 import arrowIcon from "../../assets/images/greenArrow.png";
 
-const ProductCard = ({ title, price, image, description, onDelete }) => (
-  <View style={styles.card}>
+const ProductCard = ({
+  title,
+  price,
+  image,
+  description,
+  onDelete,
+  onPress,
+}) => (
+  <TouchableOpacity style={styles.card} onPress={onPress}>
     <View style={styles.imageContainer}>
       <Image source={image} style={styles.productImage} />
       <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
@@ -32,45 +42,167 @@ const ProductCard = ({ title, price, image, description, onDelete }) => (
         {description ? description : "No description available"}
       </Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
+
+const ProductDetailModal = ({ visible, product, onClose, ingredients }) => {
+  if (!product) return null;
+
+  const getIngredientName = (ingredientId) => {
+    const ingredient = ingredients.find((ing) => ing.id === ingredientId);
+    return ingredient ? ingredient.name : "Unknown Ingredient";
+  };
+
+  return (
+    <Modal
+      visible={visible}
+      animationType="slide"
+      transparent={true}
+      onRequestClose={onClose}
+    >
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContainer}>
+          {/* Header */}
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>Product Details</Text>
+            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+              <Ionicons name="close" size={24} color="#0D3A2D" />
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView
+            style={styles.modalContent}
+            showsVerticalScrollIndicator={false}
+          >
+            {/* Product Image */}
+            <View style={styles.modalImageContainer}>
+              <Image source={product.image} style={styles.modalProductImage} />
+            </View>
+
+            {/* Product Basic Info */}
+            <View style={styles.modalInfoSection}>
+              <Text style={styles.modalProductName}>{product.title}</Text>
+              <Text style={styles.modalProductDescription}>
+                {product.description || "No description available"}
+              </Text>
+            </View>
+
+            {/* Pricing Information */}
+            <View style={styles.modalPricingSection}>
+              <View style={styles.modalPriceRow}>
+                <Text style={styles.modalPriceLabel}>Price:</Text>
+                <Text style={styles.modalPriceValue}>
+                  ₱{product.price.toFixed(2)}
+                </Text>
+              </View>
+              {product.costPerServing > 0 && (
+                <View style={styles.modalPriceRow}>
+                  <Text style={styles.modalPriceLabel}>Cost per Serving:</Text>
+                  <Text style={styles.modalPriceValue}>
+                    ₱{product.costPerServing.toFixed(2)}
+                  </Text>
+                </View>
+              )}
+            </View>
+
+            {/* Ingredients Section */}
+            {product.ingredients && product.ingredients.length > 0 && (
+              <View style={styles.modalIngredientsSection}>
+                <Text style={styles.modalSectionTitle}>Ingredients</Text>
+                {product.ingredients.map((ingredient, index) => (
+                  <View key={index} style={styles.modalIngredientItem}>
+                    <View style={styles.modalIngredientInfo}>
+                      <Text style={styles.modalIngredientName}>
+                        {getIngredientName(ingredient.id)}
+                      </Text>
+                      <Text style={styles.modalIngredientQuantity}>
+                        {ingredient.quantity} {ingredient.unit}
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+              </View>
+            )}
+
+            {/* Created Date */}
+            {product.createdAt && (
+              <View style={styles.modalDateSection}>
+                <Text style={styles.modalDateLabel}>Created:</Text>
+                <Text style={styles.modalDateValue}>{product.createdAt}</Text>
+              </View>
+            )}
+          </ScrollView>
+        </View>
+      </View>
+    </Modal>
+  );
+};
 
 export default function ProductView() {
   const navigation = useNavigation();
   const { products, deleteProduct } = useProducts();
+  const { ingredients } = useIngredients();
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleDelete = (productId, productTitle) => {
     Alert.alert(
       "Delete Product",
-      `Are you sure you want to delete "${productTitle}"?`,
+      `Are you sure you want to delete \"${productTitle}\"?`,
       [
         {
           text: "Cancel",
           style: "cancel",
         },
         {
-          text: "Delete",
+          text: "Continue",
           style: "destructive",
           onPress: () => {
-            deleteProduct(productId);
-            Toast.show({
-              type: "success",
-              text1: "Product Deleted",
-              text2: `${productTitle} has been removed`,
-              position: "bottom",
-              visibilityTime: 2000,
-            });
+            // Second confirmation
+            Alert.alert(
+              "Confirm Permanent Deletion",
+              `This action is irreversible. Do you really want to permanently delete \"${productTitle}\"?`,
+              [
+                {
+                  text: "No",
+                  style: "cancel",
+                },
+                {
+                  text: "Delete Forever",
+                  style: "destructive",
+                  onPress: () => {
+                    deleteProduct(productId);
+                    Toast.show({
+                      type: "success",
+                      text1: "Product Deleted",
+                      text2: `${productTitle} has been removed`,
+                      position: "bottom",
+                      visibilityTime: 2000,
+                    });
+                  },
+                },
+              ]
+            );
           },
         },
       ]
     );
   };
 
+  const handleProductPress = (product) => {
+    setSelectedProduct(product);
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setSelectedProduct(null);
+  };
+
   const filteredProducts = useCallback(() => {
     let filtered = products;
 
-    // Apply search filter if there's a search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase().trim();
       filtered = products.filter((product) =>
@@ -78,7 +210,6 @@ export default function ProductView() {
       );
     }
 
-    // Sort products alphabetically by title
     return filtered.sort((a, b) => a.title.localeCompare(b.title));
   }, [searchQuery, products]);
 
@@ -103,7 +234,7 @@ export default function ProductView() {
             }}
           />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Product View</Text>
+        <Text style={styles.headerTitle}>PRODUCT VIEW</Text>
         <View style={styles.headerRight} />
       </View>
 
@@ -143,6 +274,7 @@ export default function ProductView() {
               image={item.image}
               description={item.description}
               onDelete={() => handleDelete(item.id, item.title)}
+              onPress={() => handleProductPress(item)}
             />
           )}
           keyExtractor={(item) => item.id.toString()}
@@ -154,6 +286,15 @@ export default function ProductView() {
           )}
         />
       </View>
+
+      {/* Product Detail Modal */}
+      <ProductDetailModal
+        visible={modalVisible}
+        product={selectedProduct}
+        onClose={handleCloseModal}
+        ingredients={ingredients}
+      />
+
       <Toast />
     </SafeAreaView>
   );
@@ -178,7 +319,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: "#0D3A2D",
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "bold",
   },
   headerRight: {
@@ -202,12 +343,9 @@ const styles = StyleSheet.create({
       height: 5,
     },
     shadowOpacity: 0.1,
-
-    // Neumorphic effect
     borderWidth: 1,
     borderColor: "#6B9774",
     backgroundColor: "#F5F5F5",
-    // Inner shadow
     shadowColor: "#000",
     shadowOffset: {
       width: -3,
@@ -320,5 +458,150 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  // Modal Styles
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    width: "90%",
+    maxHeight: "85%",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+  modalHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E0E0E0",
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#0D3A2D",
+  },
+  closeButton: {
+    padding: 4,
+  },
+  modalContent: {
+    padding: 20,
+  },
+  modalImageContainer: {
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  modalProductImage: {
+    width: 125,
+    height: 100,
+    borderRadius: 8,
+    resizeMode: "cover",
+  },
+  modalInfoSection: {
+    marginBottom: 20,
+  },
+  modalProductName: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#0D3A2D",
+    marginBottom: 8,
+    textAlign: "center",
+  },
+  modalProductDescription: {
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
+    lineHeight: 22,
+  },
+  modalPricingSection: {
+    backgroundColor: "#F8F9FA",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 20,
+  },
+  modalPriceRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  modalPriceLabel: {
+    fontSize: 16,
+    color: "#666",
+    fontWeight: "500",
+  },
+  modalPriceValue: {
+    fontSize: 18,
+    color: "#0D3A2D",
+    fontWeight: "bold",
+  },
+  modalIngredientsSection: {
+    backgroundColor: "#F8F9FA",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 4,
+  },
+  modalSectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#0D3A2D",
+    marginBottom: 12,
+  },
+  modalIngredientItem: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  modalIngredientInfo: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  modalIngredientName: {
+    fontSize: 16,
+    color: "#0D3A2D",
+    fontWeight: "500",
+    flex: 1,
+  },
+  modalIngredientQuantity: {
+    fontSize: 14,
+    color: "#B36718",
+    fontWeight: "bold",
+  },
+  modalDateSection: {
+    padding: 16,
+    marginBottom: 16,
+  },
+  modalDateLabel: {
+    fontSize: 12,
+    color: "#666",
+    fontWeight: "500",
+    marginBottom: 4,
+  },
+  modalDateValue: {
+    fontSize: 13,
+    color: "#0D3A2D",
+    fontWeight: "500",
   },
 });

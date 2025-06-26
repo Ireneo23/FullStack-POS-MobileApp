@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "bold",
     color: "#0D3A2D",
   },
@@ -187,9 +187,9 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   card: {
-    borderRadius: 12,
+    borderRadius: 8,
     padding: 8,
-    marginBottom: 16,
+    marginBottom: 4,
     borderWidth: 2,
     borderColor: "transparent",
     shadowColor: "#000",
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 4,
+    marginBottom: 2,
   },
   receiptInfo: {
     flexDirection: "row",
@@ -215,10 +215,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 4,
+    marginBottom: 2,
   },
   receiptLabel: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#fff",
   },
   receiptNumber: {
@@ -228,16 +228,16 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   date: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#fff",
   },
   quantityLabel: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#fff",
   },
 
   amount: {
-    fontSize: 16,
+    fontSize: 12,
     fontWeight: "bold",
     color: "#FFBB03",
   },
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   emptyText: {
-    fontSize: 16,
+    fontSize: 12,
     color: "#666",
   },
 });

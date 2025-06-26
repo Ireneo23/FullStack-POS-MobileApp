@@ -39,7 +39,7 @@ const InformationScreen = () => {
             }}
           />
         </TouchableOpacity>
-        <Text style={styles.topBarTitle}>Information</Text>
+        <Text style={styles.topBarTitle}>INFORMATION</Text>
         <View style={{ width: 40 }} />
       </View>
 
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   topBarTitle: {
-    fontSize: 20,
+    fontSize: 12,
     fontWeight: "bold",
     color: "#083C2D",
     textAlign: "center",
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   menuSection: {
     backgroundColor: "#fff",
     borderRadius: 18,
-    marginHorizontal: 16,
+    marginHorizontal: 20,
     paddingVertical: 8,
     paddingHorizontal: 4,
     shadowColor: "#000",

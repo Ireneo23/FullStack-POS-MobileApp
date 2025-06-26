@@ -297,7 +297,7 @@ export default function InventoryScreen() {
             }}
           />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Inventory</Text>
+        <Text style={styles.headerTitle}>INVENTORY</Text>
         <View style={styles.headerRight} />
       </View>
 
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: "#0D3A2D",
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "bold",
   },
   headerRight: {

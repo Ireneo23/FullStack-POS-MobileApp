@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: "#0D3A2D",
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "bold",
   },
   headerRight: {

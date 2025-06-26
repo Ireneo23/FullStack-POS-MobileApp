@@ -92,7 +92,7 @@ export default function NotificationScreen() {
             }}
           />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Notifications</Text>
+        <Text style={styles.headerTitle}>NOTIFICATIONS</Text>
         <View style={styles.headerRight} />
       </View>
 
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: "#0D3A2D",
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "bold",
   },
   headerRight: {

@@ -85,7 +85,7 @@ const MyAccountScreen = () => {
             }}
           />
         </TouchableOpacity>
-        <Text style={styles.topBarTitle}>Bio-data</Text>
+        <Text style={styles.topBarTitle}>BIO-DATA</Text>
         <View style={{ width: 40 }} />
       </View>
       <KeyboardAvoidingView
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   topBarTitle: {
-    fontSize: 20,
+    fontSize: 12,
     fontWeight: "bold",
     color: "#1E3A34",
     textAlign: "center",

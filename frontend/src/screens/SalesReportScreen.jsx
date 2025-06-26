@@ -273,7 +273,7 @@ const SalesReportScreen = () => {
             }}
           />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Sales Report</Text>
+        <Text style={styles.headerTitle}>SALES REPORT</Text>
         <View style={styles.headerRight} />
       </View>
 
@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: "#0D3A2D",
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: "bold",
   },
   headerRight: {

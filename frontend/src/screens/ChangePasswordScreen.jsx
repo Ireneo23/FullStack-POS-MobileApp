@@ -62,7 +62,7 @@ const ChangePasswordScreen = () => {
             }}
           />
         </TouchableOpacity>
-        <Text style={styles.topBarTitle}>Change Password</Text>
+        <Text style={styles.topBarTitle}>CHANGE PASSWORD</Text>
         <View style={{ width: 40 }} />
       </View>
       {/* Main Section */}
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   topBarTitle: {
-    fontSize: 20,
+    fontSize: 12,
     fontWeight: "bold",
     color: "#083C2D",
     textAlign: "center",
