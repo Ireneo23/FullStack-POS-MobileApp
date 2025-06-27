@@ -10,6 +10,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import arrowIcon from "../../assets/images/greenArrow.png";
+import HeaderComponent from "../components/HeaderComponent";
 
 export default function PaymentMethodScreen() {
   const navigation = useNavigation();
@@ -19,23 +20,10 @@ export default function PaymentMethodScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Image
-            source={arrowIcon}
-            style={{
-              width: 32,
-              height: 24,
-              transform: [{ scaleX: -1 }],
-            }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>PAYMENT METHOD</Text>
-        <View style={styles.headerRight} />
-      </View>
+      <HeaderComponent
+        title="PAYMENT METHOD"
+        onBack={() => navigation.goBack()}
+      />
 
       {/* Main Content */}
       <View style={styles.content}>
@@ -84,26 +72,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-    marginTop: 16,
-  },
-  backButton: {
-    padding: 8,
-  },
-  headerTitle: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#0D3A2D",
-  },
-  headerRight: {
-    width: 40,
   },
   content: {
     flex: 1,

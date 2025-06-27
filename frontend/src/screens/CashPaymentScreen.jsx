@@ -11,6 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import arrowIcon from "../../assets/images/greenArrow.png";
+import HeaderComponent from "../components/HeaderComponent";
 
 export default function CashPaymentScreen() {
   const navigation = useNavigation();
@@ -38,23 +39,10 @@ export default function CashPaymentScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Image
-            source={arrowIcon}
-            style={{
-              width: 32,
-              height: 24,
-              transform: [{ scaleX: -1 }],
-            }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>CASH PAYMENT METHOD</Text>
-        <View style={styles.headerRight} />
-      </View>
+      <HeaderComponent
+        title="CASH PAYMENT METHOD"
+        onBack={() => navigation.goBack()}
+      />
 
       {/* Main Content */}
       <View style={styles.mainContent}>
@@ -149,27 +137,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 12,
-    backgroundColor: "#f5f5f5",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    marginTop: 16,
-  },
-  backButton: {
-    padding: 8,
-  },
-  headerTitle: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#0D3A2D",
-  },
-  headerRight: {
-    width: 40,
   },
   mainContent: {
     flex: 1,

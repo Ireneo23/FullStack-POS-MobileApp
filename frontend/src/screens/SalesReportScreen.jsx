@@ -8,16 +8,14 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Modal,
-  Image,
   Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { LineChart, PieChart } from "react-native-chart-kit";
+import { BarChart, PieChart } from "react-native-chart-kit";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Card } from "react-native-paper";
-import { LinearGradient } from "expo-linear-gradient";
-import arrowIcon from "../../assets/images/greenArrow.png";
+import HeaderComponent from "../components/HeaderComponent";
 
 const { width } = Dimensions.get("window");
 
@@ -98,13 +96,20 @@ const SalesReportScreen = () => {
   const salesData = [500, 2300, 4000, 3700, 4673, 1200, 700];
   const totalSales = salesData.reduce((sum, value) => sum + value, 0);
 
-  const lineData = {
+  const barData = {
     labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
     datasets: [
       {
         data: salesData,
-        color: (opacity = 1) => `rgba(0, 122, 255, ${opacity})`, // Blue color
-        strokeWidth: 3,
+        colors: [
+          (opacity = 1) => `rgba(107, 151, 116, ${opacity})`, // green
+          (opacity = 1) => `rgba(13, 58, 45, ${opacity})`, // dark green
+          (opacity = 1) => `rgba(179, 103, 24, ${opacity})`, // brown
+          (opacity = 1) => `rgba(255, 187, 3, ${opacity})`, // yellow
+          (opacity = 1) => `rgba(0, 122, 255, ${opacity})`, // blue
+          (opacity = 1) => `rgba(255, 99, 132, ${opacity})`, // pink
+          (opacity = 1) => `rgba(127, 0, 255, ${opacity})`, // light yellow
+        ],
       },
     ],
   };
@@ -119,48 +124,17 @@ const SalesReportScreen = () => {
     style: {
       borderRadius: 16,
     },
-    propsForDots: {
-      r: "6",
-      strokeWidth: "2",
-      stroke: "#0D3A2D",
-    },
     formatYLabel: (value) => `₱${value}`,
     propsForLabels: {
       fontSize: 12,
     },
-  };
-
-  const renderDot = (props) => {
-    const { x, y, index } = props;
-    const isFriday = index === 4; // Friday is at index 4
-
-    if (isFriday) {
-      return (
-        <View key={index}>
-          <View
-            style={[
-              styles.tooltip,
-              {
-                left: x - 40,
-                top: y - 60,
-              },
-            ]}
-          >
-            <Text style={styles.tooltipText}>₱4,673</Text>
-          </View>
-          <View
-            style={[
-              styles.dot,
-              {
-                left: x - 6,
-                top: y - 6,
-              },
-            ]}
-          />
-        </View>
-      );
-    }
-    return null;
+    barPercentage: 0.6,
+    fillShadowGradient: "#6B9774",
+    fillShadowGradientOpacity: 1,
+    propsForBackgroundLines: {
+      strokeDasharray: "",
+      stroke: "#e0e0e0",
+    },
   };
 
   const topSellers = [
@@ -259,23 +233,10 @@ const SalesReportScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Image
-            source={arrowIcon}
-            style={{
-              width: 32,
-              height: 24,
-              transform: [{ scaleX: -1 }],
-            }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>SALES REPORT</Text>
-        <View style={styles.headerRight} />
-      </View>
+      <HeaderComponent
+        title="SALES REPORT"
+        onBack={() => navigation.goBack()}
+      />
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* Date Range and Report Filter */}
@@ -336,20 +297,31 @@ const SalesReportScreen = () => {
             </Text>
           </View>
           <View style={styles.chartContainer}>
-            <LineChart
-              data={lineData}
-              width={width - 48}
+            <BarChart
+              data={barData}
+              width={width - 46}
               height={220}
-              chartConfig={chartConfig}
-              bezier
-              style={styles.lineChart}
-              withInnerLines={false}
-              withOuterLines={false}
-              withVerticalLines={false}
-              withHorizontalLines={false}
-              renderDotContent={renderDot}
-              segments={5}
-              yAxisInterval={1}
+              chartConfig={{
+                ...chartConfig,
+                backgroundColor: "#fff",
+                backgroundGradientFrom: "#fff",
+                backgroundGradientTo: "#fff",
+                propsForLabels: {
+                  ...chartConfig.propsForLabels,
+                  style: [
+                    { ...chartConfig.propsForLabels?.style },
+                    { marginLeft: 16 },
+                  ],
+                },
+              }}
+              style={styles.barChart}
+              fromZero
+              showBarTops={false}
+              withInnerLines={true}
+              withHorizontalLabels={true}
+              withCustomBarColorFromData={true}
+              flatColor={true}
+              yLabelsOffset={24}
             />
           </View>
         </Card>
@@ -466,27 +438,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f8f9fa",
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#fff",
-    padding: 16,
-    marginTop: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  backButton: {
-    padding: 8,
-  },
-  headerTitle: {
-    color: "#0D3A2D",
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  headerRight: {
-    width: 40,
-  },
   content: {
     flex: 1,
     padding: 16,
@@ -562,13 +513,13 @@ const styles = StyleSheet.create({
   },
   chartCard: {
     padding: 20,
-    marginBottom: 24,
+    marginBottom: 16,
     borderRadius: 16,
     elevation: 3,
     backgroundColor: "#fff",
   },
   chartHeader: {
-    marginBottom: 20,
+    marginBottom: 8,
     alignItems: "center",
   },
   chartTitle: {
@@ -586,11 +537,9 @@ const styles = StyleSheet.create({
   chartContainer: {
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 10,
   },
-  lineChart: {
-    marginVertical: 4,
-    borderRadius: 16,
+  barChart: {
+    borderRadius: 8,
   },
   summaryGrid: {
     flexDirection: "row",

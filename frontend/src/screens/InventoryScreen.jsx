@@ -17,6 +17,7 @@ import { useIngredients } from "../context/IngredientContext";
 import { useNotifications } from "../context/NotificationContext";
 import Modal from "react-native-modal";
 import arrowIcon from "../../assets/images/greenArrow.png";
+import HeaderComponent from "../components/HeaderComponent";
 
 const StockUpdateModal = ({
   isVisible,
@@ -283,23 +284,7 @@ export default function InventoryScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Image
-            source={arrowIcon}
-            style={{
-              width: 32,
-              height: 24,
-              transform: [{ scaleX: -1 }],
-            }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>INVENTORY</Text>
-        <View style={styles.headerRight} />
-      </View>
+      <HeaderComponent title="INVENTORY" onBack={() => navigation.goBack()} />
 
       {/* Table Header */}
       <View style={styles.tableHeader}>

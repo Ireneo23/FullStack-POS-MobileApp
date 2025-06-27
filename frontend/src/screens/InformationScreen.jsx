@@ -12,6 +12,7 @@ import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useUser } from "../context/UserContext";
 import arrowIcon from "../../assets/images/greenArrow.png";
+import HeaderComponent from "../components/HeaderComponent";
 
 const InformationScreen = () => {
   const navigation = useNavigation();
@@ -25,23 +26,7 @@ const InformationScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Top Bar */}
-      <View style={styles.topBar}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Image
-            source={arrowIcon}
-            style={{
-              width: 32,
-              height: 24,
-              transform: [{ scaleX: -1 }],
-            }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.topBarTitle}>INFORMATION</Text>
-        <View style={{ width: 40 }} />
-      </View>
+      <HeaderComponent title="INFORMATION" onBack={() => navigation.goBack()} />
 
       {/* Account Details Card */}
       <View style={styles.accountCard}>
@@ -136,26 +121,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  topBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#fff",
-    padding: 16,
-    marginTop: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  backButton: {
-    padding: 4,
-  },
-  topBarTitle: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#083C2D",
-    textAlign: "center",
-    flex: 1,
   },
   accountCard: {
     backgroundColor: "#083C2D",

@@ -13,6 +13,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import arrowIcon from "../../assets/images/greenArrow.png";
+import HeaderComponent from "../components/HeaderComponent";
 
 const ChangePasswordScreen = () => {
   const navigation = useNavigation();
@@ -48,23 +49,10 @@ const ChangePasswordScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.topBar}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Image
-            source={arrowIcon}
-            style={{
-              width: 32,
-              height: 24,
-              transform: [{ scaleX: -1 }],
-            }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.topBarTitle}>CHANGE PASSWORD</Text>
-        <View style={{ width: 40 }} />
-      </View>
+      <HeaderComponent
+        title="CHANGE PASSWORD"
+        onBack={() => navigation.goBack()}
+      />
       {/* Main Section */}
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -161,27 +149,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 20,
     paddingBottom: 40,
-  },
-  topBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#fff",
-    padding: 16,
-    marginTop: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  backButton: {
-    padding: 4,
-    marginLeft: 4,
-  },
-  topBarTitle: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#083C2D",
-    textAlign: "center",
-    flex: 1,
   },
   mainSection: {
     marginTop: 10,

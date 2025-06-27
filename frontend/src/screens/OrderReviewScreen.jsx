@@ -13,6 +13,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import arrowIcon from "../../assets/images/greenArrow.png";
 import ButtonComponent from "../components/ButtonComponent";
+import HeaderComponent from "../components/HeaderComponent";
 
 const OrderItem = ({ item, onUpdateQuantity, onDelete }) => {
   const totalPrice = item.price * item.qty;
@@ -101,23 +102,10 @@ export default function OrderReviewScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Image
-            source={arrowIcon}
-            style={{
-              width: 32,
-              height: 24,
-              transform: [{ scaleX: -1 }],
-            }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Order Review</Text>
-        <View style={styles.headerRight} />
-      </View>
+      <HeaderComponent
+        title="ORDER REVIEW"
+        onBack={() => navigation.goBack()}
+      />
 
       {/* Receipt Info */}
       <View style={styles.receiptInfo}>
@@ -173,26 +161,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-    marginTop: 16,
-  },
-  backButton: {
-    padding: 8,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#0D3A2D",
-  },
-  headerRight: {
-    width: 40,
-  },
+
   receiptInfo: {
     padding: 16,
     borderBottomWidth: 1,

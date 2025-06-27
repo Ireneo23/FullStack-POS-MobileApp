@@ -13,6 +13,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useNotifications } from "../context/NotificationContext";
 import arrowIcon from "../../assets/images/greenArrow.png";
+import HeaderComponent from "../components/HeaderComponent";
 
 const NotificationCard = ({ notification, onDelete, onMarkAsRead }) => {
   return (
@@ -78,23 +79,10 @@ export default function NotificationScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Image
-            source={arrowIcon}
-            style={{
-              width: 32,
-              height: 24,
-              transform: [{ scaleX: -1 }],
-            }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>NOTIFICATIONS</Text>
-        <View style={styles.headerRight} />
-      </View>
+      <HeaderComponent
+        title="NOTIFICATION"
+        onBack={() => navigation.goBack()}
+      />
 
       {/* Notifications List */}
       <ScrollView style={styles.content}>
@@ -121,27 +109,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#fff",
-    padding: 16,
-    marginTop: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  backButton: {
-    padding: 8,
-  },
-  headerTitle: {
-    color: "#0D3A2D",
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  headerRight: {
-    width: 40,
   },
   content: {
     flex: 1,

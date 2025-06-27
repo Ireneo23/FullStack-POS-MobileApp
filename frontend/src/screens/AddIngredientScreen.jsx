@@ -19,6 +19,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useIngredients } from "../context/IngredientContext";
 import arrowIcon from "../../assets/images/greenArrow.png";
 import ButtonComponent from "../components/ButtonComponent";
+import HeaderComponent from "../components/HeaderComponent";
 
 export default function AddIngredientScreen() {
   const navigation = useNavigation();
@@ -75,23 +76,10 @@ export default function AddIngredientScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Image
-            source={arrowIcon}
-            style={{
-              width: 32,
-              height: 24,
-              transform: [{ scaleX: -1 }],
-            }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>ADD INGREDIENT</Text>
-        <View style={styles.headerRight} />
-      </View>
+      <HeaderComponent
+        title="ADD INGREDIENT"
+        onBack={() => navigation.goBack()}
+      />
 
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -246,27 +234,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5x",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#f5f5f5",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-    marginTop: 16,
-  },
-  backButton: {
-    padding: 8,
-  },
-  headerTitle: {
-    color: "#0D3A2D",
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  headerRight: {
-    width: 40,
   },
   content: {
     backgroundColor: "#fff",

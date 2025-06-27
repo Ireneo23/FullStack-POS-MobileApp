@@ -15,6 +15,7 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import arrowIcon from "../../assets/images/greenArrow.png";
 import { LinearGradient } from "expo-linear-gradient";
+import HeaderComponent from "../components/HeaderComponent";
 
 const ReceiptCard = ({ item, onDelete, onPress }) => (
   <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
@@ -110,23 +111,10 @@ export default function PaymentHistoryScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Image
-            source={arrowIcon}
-            style={{
-              width: 32,
-              height: 24,
-              transform: [{ scaleX: -1 }],
-            }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>PAYMENT HISTORY</Text>
-        <View style={styles.headerRight} />
-      </View>
+      <HeaderComponent
+        title="PAYMENT HISTORY"
+        onBack={() => navigation.goBack()}
+      />
 
       {/* Transaction List */}
       {loading ? (
@@ -162,30 +150,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 16,
-    backgroundColor: "#f5f5f5",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    marginTop: 16,
-  },
-  backButton: {
-    padding: 8,
-  },
-  headerTitle: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#0D3A2D",
-  },
-  headerRight: {
-    width: 40,
-  },
-  listContainer: {
-    padding: 16,
-  },
+
   card: {
     borderRadius: 8,
     padding: 8,

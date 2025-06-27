@@ -23,6 +23,7 @@ import arrowIcon from "../../assets/images/greenArrow.png";
 import camIcon from "../../assets/images/cam.png";
 import galleryIcon from "../../assets/images/gallery.png";
 import ButtonComponent from "../components/ButtonComponent";
+import HeaderComponent from "../components/HeaderComponent";
 
 const IngredientGroup = ({
   index,
@@ -278,23 +279,7 @@ export default function AddProductScreen() {
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Image
-            source={arrowIcon}
-            style={{
-              width: 32,
-              height: 24,
-              transform: [{ scaleX: -1 }],
-            }}
-          />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>ADD PRODUCT</Text>
-        <View style={styles.headerRight} />
-      </View>
+      <HeaderComponent title="ADD PRODUCT" onBack={() => navigation.goBack()} />
 
       <ScrollView style={styles.scrollView}>
         {/* Image Upload Area */}
@@ -422,26 +407,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
   },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#fff",
-    padding: 16,
-    marginTop: 16,
-    marginBottom: 0,
-  },
-  backButton: {
-    padding: 8,
-  },
-  headerTitle: {
-    color: "#0D3A2D",
-    fontSize: 12,
-    fontWeight: "bold",
-  },
-  headerRight: {
-    width: 40,
-  },
+
   scrollView: {
     flex: 1,
   },
