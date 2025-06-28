@@ -14,6 +14,8 @@ import NotificationScreen from './src/screens/NotificationScreen';
 import OnboardingScreen from './src/screens/OnboardingScreen';
 import SignInScreen from './src/screens/SignInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
+import BusinessInformation from './src/screens/BusinessInformation';
+import Terms from './src/screens/Terms';
 import SalesReportScreen from './src/screens/SalesReportScreen';
 import { IngredientProvider } from './src/context/IngredientContext';
 import { ProductProvider } from './src/context/ProductContext';
@@ -41,6 +43,8 @@ export default function App() {
                 <Stack.Screen name="Onboarding" component={OnboardingScreen} />
                 <Stack.Screen name="SignIn" component={SignInScreen} />
                 <Stack.Screen name="SignUp" component={SignUpScreen} />
+                <Stack.Screen name="BusinessInformation" component={BusinessInformation} />
+                <Stack.Screen name="Terms" component={Terms} />
                 <Stack.Screen name="MainTabs" component={CustomTabNavigator} />
                 <Stack.Screen name="ProductView" component={ProductView} />
                 <Stack.Screen name="OrderReview" component={OrderReviewScreen} />

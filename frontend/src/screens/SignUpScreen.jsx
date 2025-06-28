@@ -21,6 +21,7 @@ const SignUpScreen = () => {
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isTermsAccepted, setIsTermsAccepted] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -61,9 +62,29 @@ const SignUpScreen = () => {
       return;
     }
 
+    if (!isTermsAccepted) {
+      Alert.alert(
+        "Input Error",
+        "Please accept the Terms and Conditions and Privacy Policy."
+      );
+      return;
+    }
+
     console.log("User signed up:", { firstName, lastName, email });
     Alert.alert("Success", "Account created successfully!");
-    navigation.navigate("SignIn");
+
+    // Pass sign-up data to BusinessInformation screen
+    navigation.navigate("BusinessInformation", {
+      signUpData: {
+        firstName,
+        lastName,
+        email,
+      },
+    });
+  };
+
+  const navigateToTerms = (type) => {
+    navigation.navigate("Terms", { type });
   };
 
   return (
@@ -159,6 +180,42 @@ const SignUpScreen = () => {
                 </TouchableOpacity>
               </View>
 
+              {/* Terms and Conditions Checkbox */}
+              <View style={styles.termsContainer}>
+                <TouchableOpacity
+                  style={styles.checkboxContainer}
+                  onPress={() => setIsTermsAccepted(!isTermsAccepted)}
+                >
+                  <View
+                    style={[
+                      styles.checkbox,
+                      isTermsAccepted && styles.checkboxChecked,
+                    ]}
+                  >
+                    {isTermsAccepted && (
+                      <Icon name="check" size={16} color="#fff" />
+                    )}
+                  </View>
+                  <Text style={styles.termsText}>
+                    I've read and agree with the{" "}
+                    <Text
+                      style={styles.linkText}
+                      onPress={() => navigateToTerms("terms")}
+                    >
+                      Terms and Conditions
+                    </Text>{" "}
+                    and the{" "}
+                    <Text
+                      style={styles.linkText}
+                      onPress={() => navigateToTerms("privacy")}
+                    >
+                      Privacy Policy
+                    </Text>
+                    .
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
               <TouchableOpacity
                 style={styles.signUpButton}
                 onPress={handleSignUp}
@@ -196,7 +253,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   formContainer: {
-    backgroundColor: "#FAF3EB",
+    backgroundColor: "#fff",
     borderRadius: 8,
     padding: 20,
     elevation: 5,
@@ -262,6 +319,39 @@ const styles = StyleSheet.create({
     color: "#0D3A2D",
     fontSize: 16,
     fontWeight: "600",
+  },
+  termsContainer: {
+    marginBottom: 20,
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: "#6B9774",
+    marginRight: 10,
+    marginTop: 2,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  checkboxChecked: {
+    backgroundColor: "#6B9774",
+  },
+  termsText: {
+    color: "#171725",
+    fontSize: 14,
+    lineHeight: 20,
+    flex: 1,
+  },
+  linkText: {
+    color: "#007AFF",
+    fontSize: 14,
+    fontWeight: "600",
+    textDecorationLine: "underline",
   },
 });
 

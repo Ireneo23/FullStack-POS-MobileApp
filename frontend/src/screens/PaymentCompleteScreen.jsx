@@ -8,21 +8,20 @@ import {
   ScrollView,
   TextInput,
   Alert,
-  Image,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import arrowIcon from "../../assets/images/greenArrow.png";
 import ButtonComponent from "../components/ButtonComponent";
 import { useProducts } from "../context/ProductContext";
 import { useIngredients } from "../context/IngredientContext";
+import { useUser } from "../context/UserContext";
 import HeaderComponent from "../components/HeaderComponent";
 
 export default function PaymentCompleteScreen() {
   const navigation = useNavigation();
   const route = useRoute();
   const isViewingHistory = !!route.params?.transaction;
+  const { userInfo } = useUser();
 
   const formatDateTime = () => {
     const now = new Date();
@@ -43,6 +42,7 @@ export default function PaymentCompleteScreen() {
   const [customerName, setCustomerName] = useState(
     dataSource.customerName || ""
   );
+
   const {
     amount,
     amountReceived,
@@ -50,11 +50,11 @@ export default function PaymentCompleteScreen() {
     paymentMethod = "Cash",
   } = dataSource;
 
-  const finalReceiptNo = isViewingHistory
+  const receiptNo = isViewingHistory
     ? dataSource.receiptNo
     : dataSource.receiptNumber;
-  const finalDate = isViewingHistory ? dataSource.date : formatDateTime();
-  const finalChange = isViewingHistory
+  const date = isViewingHistory ? dataSource.date : formatDateTime();
+  const change = isViewingHistory
     ? dataSource.change
     : (parseFloat(amountReceived) - parseFloat(amount)).toFixed(2);
 
@@ -63,7 +63,6 @@ export default function PaymentCompleteScreen() {
 
   const saveTransaction = async () => {
     try {
-      // Get existing transactions
       const existingTransactionsJson = await AsyncStorage.getItem(
         "transactions"
       );
@@ -71,66 +70,57 @@ export default function PaymentCompleteScreen() {
         ? JSON.parse(existingTransactionsJson)
         : [];
 
-      // Get the receipt number from route params
       const { receiptNumber } = route.params || {};
-
       if (!receiptNumber) {
         throw new Error("Receipt number is missing");
       }
 
-      // Create new transaction object
       const newTransaction = {
-        id: Date.now().toString(), // Use timestamp as unique ID
-        receiptNo: finalReceiptNo,
-        date: finalDate,
+        id: Date.now().toString(),
+        receiptNo,
+        date,
         quantity: orderItems.reduce((sum, item) => sum + item.qty, 0),
         totalAmount: amount,
-        orderItems: orderItems,
-        paymentMethod: paymentMethod,
+        orderItems,
+        paymentMethod,
         customerName: customerName || "N/A",
-        amountReceived: amountReceived,
-        change: finalChange,
+        amountReceived,
+        change,
       };
 
-      // Add new transaction to array
       const updatedTransactions = [newTransaction, ...existingTransactions];
-
-      // Save updated transactions
       await AsyncStorage.setItem(
         "transactions",
         JSON.stringify(updatedTransactions)
       );
-
-      // Save the last used receipt number
       await AsyncStorage.setItem("lastReceiptNumber", receiptNumber);
     } catch (error) {
       console.error("Error saving transaction:", error);
-      throw error; // Re-throw to handle in the calling function
+      throw error;
     }
   };
 
   const handleNewEntry = async () => {
     try {
       await saveTransaction();
-      // Deduct ingredients from inventory for each product in the order
+
+      // Deduct ingredients from inventory
       const today = new Date().toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
       });
+
       orderItems.forEach((orderItem) => {
-        // Find the product by id (prefer id, fallback to title)
         const product = products.find(
           (p) => p.id === orderItem.id || p.title === orderItem.title
         );
         if (product && Array.isArray(product.ingredients)) {
           product.ingredients.forEach((ingredient) => {
-            // Find the current ingredient in inventory
             const currentIngredient = ingredients.find(
               (ing) => ing.id === ingredient.id
             );
             if (currentIngredient) {
-              // Deduct the total quantity used (ingredient.quantity * orderItem.qty)
               const totalUsed =
                 (ingredient.quantity || 0) * (orderItem.qty || 1);
               const newQuantity = currentIngredient.quantity - totalUsed;
@@ -139,36 +129,25 @@ export default function PaymentCompleteScreen() {
           });
         }
       });
-      Alert.alert(
-        "Success",
-        "Transaction has been saved successfully!",
-        [
-          {
-            text: "OK",
-            onPress: () => {
-              // Navigate to MainTabs and reset the navigation stack
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "MainTabs" }],
-              });
-            },
+
+      Alert.alert("Success", "Transaction has been saved successfully!", [
+        {
+          text: "OK",
+          onPress: () => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "MainTabs" }],
+            });
           },
-        ],
-        { cancelable: false }
-      );
+        },
+      ]);
     } catch (error) {
-      Alert.alert(
-        "Error",
-        "Failed to save transaction. Please try again.",
-        [{ text: "OK" }],
-        { cancelable: false }
-      );
+      Alert.alert("Error", "Failed to save transaction. Please try again.");
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
       <HeaderComponent
         title="PAYMENT COMPLETE"
         onBack={() => navigation.goBack()}
@@ -177,9 +156,16 @@ export default function PaymentCompleteScreen() {
       <ScrollView style={styles.scrollView}>
         {/* Receipt Info */}
         <View style={styles.receiptInfo}>
-          <Text style={styles.receiptTitle}>StarPOS</Text>
+          <View style={styles.businessInfo}>
+            <Text style={styles.receiptTitle}>
+              {userInfo?.businessName || "StarPOS"}
+            </Text>
+            <Text style={styles.businessAddress}>
+              {userInfo?.address || ""}
+            </Text>
+          </View>
           <Text style={styles.receiptNumber}>
-            Receipt No. {finalReceiptNo || "000001"}
+            Receipt No. {receiptNo || "000001"}
           </Text>
         </View>
 
@@ -208,7 +194,7 @@ export default function PaymentCompleteScreen() {
 
         {/* Date and Time */}
         <View style={styles.dateTimeContainer}>
-          <Text style={styles.dateTimeText}>{finalDate}</Text>
+          <Text style={styles.dateTimeText}>{date}</Text>
         </View>
 
         {/* Totals Section */}
@@ -231,7 +217,7 @@ export default function PaymentCompleteScreen() {
           </View>
           <View style={styles.totalRow}>
             <Text style={styles.totalLabel}>Change Amount:</Text>
-            <Text style={styles.totalValue}>₱{finalChange}</Text>
+            <Text style={styles.totalValue}>₱{change}</Text>
           </View>
         </View>
 
@@ -268,7 +254,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
-
   scrollView: {
     flex: 1,
   },
@@ -278,10 +263,20 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#fff",
   },
+  businessInfo: {
+    flexDirection: "column",
+    flex: 1,
+  },
   receiptTitle: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#0D3A2D",
+    marginBottom: 4,
+  },
+  businessAddress: {
+    fontSize: 12,
+    color: "#666",
+    lineHeight: 16,
   },
   receiptNumber: {
     fontSize: 16,

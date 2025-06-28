@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   formContainer: {
-    backgroundColor: "#FAF3EB",
+    backgroundColor: "#fff",
     borderRadius: 8,
     padding: 20,
     elevation: 5,
