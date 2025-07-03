@@ -452,12 +452,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 20,
+    padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: "#E0E0E0",
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#0D3A2D",
   },
@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   modalContent: {
-    padding: 20,
+    padding: 16,
   },
   modalImageContainer: {
     alignItems: "center",
@@ -481,14 +481,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   modalProductName: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#0D3A2D",
     marginBottom: 8,
     textAlign: "center",
   },
   modalProductDescription: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#666",
     textAlign: "center",
     lineHeight: 22,
@@ -497,7 +497,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8F9FA",
     borderRadius: 12,
     padding: 16,
-    marginBottom: 20,
+    marginBottom: 8,
   },
   modalPriceRow: {
     flexDirection: "row",
@@ -506,12 +506,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   modalPriceLabel: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#666",
     fontWeight: "500",
   },
   modalPriceValue: {
-    fontSize: 18,
+    fontSize: 14,
     color: "#0D3A2D",
     fontWeight: "bold",
   },
@@ -522,10 +522,10 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   modalSectionTitle: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bold",
     color: "#0D3A2D",
-    marginBottom: 12,
+    marginBottom: 8,
   },
   modalIngredientItem: {
     backgroundColor: "#fff",
@@ -547,7 +547,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalIngredientName: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#0D3A2D",
     fontWeight: "500",
     flex: 1,
@@ -559,16 +559,18 @@ const styles = StyleSheet.create({
   },
   modalDateSection: {
     padding: 16,
-    marginBottom: 16,
+    marginBottom: 8,
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   modalDateLabel: {
     fontSize: 12,
     color: "#666",
     fontWeight: "500",
-    marginBottom: 4,
+    marginRight: 8,
   },
   modalDateValue: {
-    fontSize: 13,
+    fontSize: 12,
     color: "#0D3A2D",
     fontWeight: "500",
   },

@@ -148,9 +148,12 @@ export default function PaymentHistoryScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#fff",
   },
-
+  listContainer: {
+    paddingHorizontal: 8,
+    paddingTop: 8,
+  },
   card: {
     borderRadius: 8,
     padding: 8,

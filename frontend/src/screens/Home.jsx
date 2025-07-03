@@ -183,13 +183,13 @@ export default function Home() {
       {/* Review Button and Total Panel */}
       {hasSelectedProducts && (
         <View style={styles.reviewContainer}>
-          <TouchableOpacity
-            style={styles.reviewButton}
-            onPress={handleReviewPress}
-          >
-            <Text style={styles.reviewButtonText}>Review</Text>
-          </TouchableOpacity>
           <View style={styles.totalPanel}>
+            <TouchableOpacity
+              style={styles.reviewButtonInPanel}
+              onPress={handleReviewPress}
+            >
+              <Text style={styles.reviewButtonTextInPanel}>Review</Text>
+            </TouchableOpacity>
             <View style={styles.totalRow}>
               <Text style={styles.totalLabel}>Total Amount:</Text>
               <Text style={styles.totalValue}>₱{totalAmount.toFixed(2)}</Text>
@@ -368,22 +368,29 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
     elevation: 5,
   },
-  reviewButton: {
-    backgroundColor: "#6B9774",
-    borderRadius: 12,
-    paddingVertical: 12,
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  reviewButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   totalPanel: {
     backgroundColor: "#0D3A2D",
-    padding: 12,
+    padding: 16,
     borderRadius: 12,
+    alignItems: "stretch",
+  },
+  reviewButtonInPanel: {
+    backgroundColor: "#FFBB03",
+    borderRadius: 8,
+    paddingVertical: 12,
+    marginBottom: 12,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  reviewButtonTextInPanel: {
+    color: "#0D3A2D",
+    fontSize: 16,
+    fontWeight: "bold",
+    letterSpacing: 1,
   },
   totalRow: {
     flexDirection: "row",

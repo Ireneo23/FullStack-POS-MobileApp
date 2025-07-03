@@ -1,18 +1,11 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
-import arrowIcon from "../../assets/images/greenArrow.png";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 const HeaderComponent = ({ title, onBack }) => (
   <View style={styles.header}>
     <TouchableOpacity onPress={onBack} style={styles.backButton}>
-      <Image
-        source={arrowIcon}
-        style={{
-          width: 32,
-          height: 24,
-          transform: [{ scaleX: -1 }],
-        }}
-      />
+      <Ionicons name="arrow-back-circle" size={28} color="#0D3A2D" />
     </TouchableOpacity>
     <Text style={styles.headerTitle}>{title}</Text>
     <View style={styles.headerRight} />

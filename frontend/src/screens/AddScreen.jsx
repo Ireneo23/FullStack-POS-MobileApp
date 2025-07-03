@@ -5,11 +5,8 @@ import {
   Text,
   TouchableOpacity,
   SafeAreaView,
-  Image,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
 import HeaderComponent from "../components/HeaderComponent";
 
 const ActionCard = ({ title, onPress }) => (
@@ -36,13 +33,11 @@ export default function AddScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
       <HeaderComponent
         title="ADD INGREDIENT / PRODUCT"
         onBack={() => navigation.goBack()}
       />
 
-      {/* Main Content */}
       <View style={styles.contentContainer}>
         <ActionCard title="Add New Product" onPress={handleAddProduct} />
         <ActionCard title="Add New Ingredient" onPress={handleAddIngredient} />
@@ -62,7 +57,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   card: {
-    backgroundColor: "#0D3A2D",
+    backgroundColor: "#fff",
     borderRadius: 12,
     padding: 16,
     shadowColor: "#000",
@@ -73,11 +68,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 2,
     elevation: 2,
+    borderWidth: 1,
+    borderColor: "#0D3A2D",
   },
   cardContent: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 16,
   },
   iconContainer: {
     width: 40,
@@ -86,16 +82,27 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
+    borderWidth: 0.5,
+    borderColor: "#0D3A2D",
+    shadowColor: "#0D3A2D",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2,
+    elevation: 5,
   },
   plusIcon: {
     color: "#0D3A2D",
-    fontSize: 32,
-    fontWeight: "bold",
+    fontSize: 28,
+    fontWeight: "condensed",
   },
   cardTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#0D3A2D",
     textAlign: "center",
+    marginLeft: 32,
   },
 });
