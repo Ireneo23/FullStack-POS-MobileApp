@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View, Animated, Image, StyleSheet, Dimensions } from "react-native";
 
-const starposSplash = require("../../assets/images/starposSplash.png");
-const splashScreenPOS = require("../../assets/images/SplashScreenPOS.png");
+const starposSplash = require("../../assets/images/3dStar.png");
+const splashScreenPOS = require("../../assets/images/3dLogo.png");
 
 const { width, height } = Dimensions.get("window");
 
