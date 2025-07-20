@@ -28,7 +28,9 @@ const styles = StyleSheet.create({
     color: "#000000",
     textAlign: "center",
     lineHeight: 24,
-    paddingHorizontal: 20,
+    paddingHorizontal: 8,
+    paddingVertical: 12,
+    marginTop: 20,
   },
   button: {
     backgroundColor: "#6B9774",
@@ -64,6 +66,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
   },
+  titleLogoContainer:{
+    padding: 16,
+    margin: 64,
+  },
+  titleLogo:{
+    width: 80,
+    height: 80,
+  }
 });
 
 export default styles; 

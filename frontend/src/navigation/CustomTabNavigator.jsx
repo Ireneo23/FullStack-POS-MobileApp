@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import Home from "../screens/Home";
+import Home from "../screens/HomeScreen";
 import InventoryScreen from "../screens/InventoryScreen";
 import SalesReportScreen from "../screens/SalesReportScreen";
 import PaymentHistoryScreen from "../screens/PaymentHistoryScreen";

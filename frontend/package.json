@@ -22,6 +22,7 @@
     "expo": "~53.0.10",
     "expo-image-picker": "^16.1.4",
     "expo-linear-gradient": "~12.3.0",
+    "expo-secure-store": "^14.2.3",
     "expo-status-bar": "~2.2.3",
     "lodash": "^4.17.21",
     "react": "19.0.0",
