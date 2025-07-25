@@ -22,15 +22,15 @@ const OnboardingScreen = () => {
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Image source={logo1} style={styles.logo} />
-          <Text style={styles.subtitle}>
-            <View>
-              <Image
-                source={require("../../assets/images/logo4.png")}
-                style={styles.titleLogo}
-              />
-            </View>
-            For All The Coffee Shop Needs.
-          </Text>
+          <View style={styles.horizontalTitleContainer}>
+            <Image
+              source={require("../../assets/images/logo4.png")}
+              style={styles.titleLogo}
+            />
+            <Text style={styles.horizontalTitleText}>
+              Run smarter, sell faster puts your business at your fingertips.
+            </Text>
+          </View>
         </View>
 
         <TouchableOpacity

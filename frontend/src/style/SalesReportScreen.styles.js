@@ -1,0 +1,317 @@
+import { StyleSheet } from "react-native"
+
+
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "#f8f9fa",
+    },
+    content: {
+      flex: 1,
+      padding: 16,
+    },
+    filterContainer: {
+      marginBottom: 24,
+      backgroundColor: "#fff",
+      borderRadius: 16,
+      padding: 16,
+      elevation: 2,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+    },
+    dateRangeContainer: {
+      marginBottom: 16,
+    },
+    dateRangeLabel: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: "#666",
+      marginBottom: 8,
+    },
+    dateButtonsContainer: {
+      flexDirection: "row",
+      alignItems: "center",
+    },
+    dateButton: {
+      backgroundColor: "#6B9774",
+      padding: 12,
+      borderRadius: 12,
+      flex: 1,
+      borderWidth: 1,
+      borderColor: "#e0e0e0",
+    },
+    dateButtonText: {
+      color: "#fff",
+      fontSize: 14,
+      fontWeight: "600",
+      textAlign: "center",
+    },
+    dateSeparator: {
+      marginHorizontal: 12,
+      color: "#666",
+      fontSize: 16,
+      fontWeight: "600",
+    },
+    dropdownContainer: {
+      borderTopWidth: 1,
+      borderTopColor: "#e0e0e0",
+      paddingTop: 16,
+    },
+    dropdownLabel: {
+      fontSize: 14,
+      fontWeight: "600",
+      color: "#666",
+      marginBottom: 8,
+    },
+    dropdown: {
+      borderColor: "#ddd",
+      borderRadius: 12,
+      borderWidth: 1,
+      backgroundColor: "#fff",
+    },
+    dropdownText: {
+      fontSize: 14,
+      color: "#333",
+    },
+    dropdownList: {
+      borderColor: "#ddd",
+      borderRadius: 12,
+    },
+    chartCard: {
+      padding: 20,
+      marginBottom: 16,
+      borderRadius: 16,
+      elevation: 3,
+      backgroundColor: "#fff",
+    },
+    chartHeader: {
+      marginBottom: 8,
+      alignItems: "center",
+    },
+    chartTitle: {
+      fontSize: 18,
+      fontWeight: "600",
+      color: "#333",
+      marginBottom: 8,
+    },
+    totalEarnings: {
+      fontSize: 28,
+      fontWeight: "bold",
+      color: "#0D3A2D",
+      marginBottom: 16,
+    },
+    chartContainer: {
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    barChart: {
+      borderRadius: 8,
+    },
+    summaryGrid: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+      marginBottom: 24,
+    },
+    summaryCard: {
+      width: "48%",
+      padding: 20,
+      marginBottom: 16,
+      borderRadius: 16,
+      elevation: 3,
+      backgroundColor: "#0D3A2D",
+    },
+    summaryTitle: {
+      fontSize: 14,
+      color: "#fff",
+      marginBottom: 8,
+      fontWeight: "500",
+    },
+    summaryValue: {
+      fontSize: 20,
+      fontWeight: "bold",
+      color: "#FFBB03",
+    },
+    topProductValue: {
+      fontSize: 16,
+    },
+    pieChartCard: {
+      padding: 20,
+      borderRadius: 16,
+      elevation: 3,
+      backgroundColor: "#fff",
+      marginBottom: 24,
+    },
+    pieChartTitle: {
+      fontSize: 20,
+      fontWeight: "bold",
+      color: "#333",
+      marginBottom: 20,
+      textAlign: "center",
+    },
+    pieChartContent: {
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    pieChartContainer: {
+      alignItems: "center",
+      position: "relative",
+      marginBottom: 20,
+    },
+    doughnutCenter: {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: [{ translateX: 18 }, { translateY: -40 }],
+      width: 80,
+      height: 80,
+      borderRadius: 40,
+      backgroundColor: "#fff",
+      alignItems: "center",
+      justifyContent: "center",
+      elevation: 2,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      zIndex: 1,
+    },
+    pieChartCenter: {
+      fontSize: 24,
+      fontWeight: "bold",
+      color: "#333",
+    },
+    pieChartCenterSubtitle: {
+      fontSize: 10,
+      color: "#666",
+      marginTop: 2,
+    },
+    legendContainer: {
+      width: "100%",
+      paddingHorizontal: 20,
+      marginBottom: 16,
+    },
+    legendItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      marginBottom: 12,
+    },
+    legendLeft: {
+      flexDirection: "row",
+      alignItems: "center",
+      flex: 1,
+    },
+    legendRight: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 8,
+    },
+    legendColor: {
+      width: 16,
+      height: 16,
+      borderRadius: 8,
+      marginRight: 12,
+    },
+    legendText: {
+      fontSize: 14,
+      color: "#333",
+      flex: 1,
+    },
+    legendValue: {
+      fontSize: 14,
+      color: "#333",
+      fontWeight: "600",
+    },
+    legendPercentage: {
+      fontSize: 14,
+      color: "#666",
+      width: 45,
+      textAlign: "right",
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      justifyContent: "flex-end",
+    },
+    modalContent: {
+      backgroundColor: "#fff",
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      padding: 20,
+      maxHeight: "80%",
+    },
+    modalHeader: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: 20,
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: "bold",
+      color: "#333",
+    },
+    durationOptionsContainer: {
+      maxHeight: 400,
+    },
+    durationOption: {
+      paddingVertical: 15,
+      paddingHorizontal: 20,
+      borderRadius: 10,
+      marginBottom: 10,
+    },
+    selectedDuration: {
+      backgroundColor: "#6B9774",
+    },
+    durationText: {
+      fontSize: 16,
+      color: "#333",
+    },
+    selectedDurationText: {
+      color: "#fff",
+      fontWeight: "600",
+    },
+    durationButton: {
+      backgroundColor: "#6B9774",
+      padding: 12,
+      borderRadius: 12,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      borderWidth: 1,
+      borderColor: "#e0e0e0",
+    },
+    durationButtonText: {
+      color: "#fff",
+      fontSize: 14,
+      fontWeight: "600",
+    },
+    tooltip: {
+      position: "absolute",
+      backgroundColor: "#6B9774",
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 8,
+      zIndex: 1000,
+    },
+    tooltipText: {
+      color: "#fff",
+      fontSize: 12,
+      fontWeight: "600",
+    },
+    dot: {
+      position: "absolute",
+      width: 12,
+      height: 12,
+      borderRadius: 6,
+      backgroundColor: "#0D3A2D",
+      borderWidth: 2,
+      borderColor: "#fff",
+    },
+  });
+
+export default styles;

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 16,
     color: "#000000",
     textAlign: "center",
     lineHeight: 24,
@@ -73,7 +73,24 @@ const styles = StyleSheet.create({
   titleLogo:{
     width: 80,
     height: 80,
-  }
+  },
+  horizontalTitleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 16,
+    marginTop: 64,
+    
+  },
+  horizontalTitleText: {
+    fontSize: 18,
+    color: "#000000",
+    textAlign: "center",
+    lineHeight: 24,
+    marginLeft: 12,
+    fontWeight: "500",
+    flexShrink: 1,
+  },
 });
 
 export default styles; 
